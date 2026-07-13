@@ -4,7 +4,7 @@ export class EncryptedLocalStorage extends EncryptedSessionStorage {
     save() {
         try {
             const encrypted = this.encryptData(); 
-            location.setItem(this.key, encrypted);
+            localStorage.setItem(this.key, encrypted);
             
             if (localStorage.getItem(this.key) === encrypted) {
                 return { success: true };
