@@ -15,9 +15,9 @@ export default function ArticlesLayout() {
   ];
 
   return (
-    <div>
+    <div className='h-screen'>
         <HomeNavBar />
-        <div className="flex min-h-screen bg-slate-50 text-slate-800 fo">
+        <div className="flex bg-slate-50 text-slate-800 min-h-11/12">
         
         <DocsSidebar />
         <main className="p-8 lg:p-12">

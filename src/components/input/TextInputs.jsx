@@ -35,7 +35,7 @@ export default function TextInputs({
                 id={name}
                 name={name}
                 placeholder={placeholder}
-                className="form-control"
+                className="outline-none w-full border-2 border-gray-400 rounded-lg p-2"
             />
         )}
     </div>

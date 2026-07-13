@@ -80,7 +80,7 @@ function SidebarNavItem({ item, depth = 0 }) {
 
 export default function DocsSidebar() {
   return (
-    <aside className="w-64 min-h-screen pt-8 bg-white border-r border-slate-200 p-4 flex flex-col justify-between overflow-y-auto">
+    <aside className="w-64 pt-8 bg-white border-r border-slate-200 p-4 flex flex-col justify-between overflow-y-auto">
       <div className="space-y-6">
         <div>
           <h3 className="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">

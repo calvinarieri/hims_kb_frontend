@@ -23,11 +23,8 @@ export default function HomeNavBar() {
 
         {/* Navigation Menu & Actions */}
         <div className="flex items-center space-x-6 text-sm font-medium text-gray-600">
-            <a href="#get-started" className="hover:text-blue-600 transition-colors duration-200">
+            <a href="/article" className="hover:text-blue-600 transition-colors duration-200">
                 Get Started
-            </a>
-            <a href="#learn" className="hover:text-blue-600 transition-colors duration-200">
-                Learn
             </a>
             <a href="#reference" className="hover:text-blue-600 transition-colors duration-200">
                 Reference
@@ -36,11 +33,11 @@ export default function HomeNavBar() {
             {/* Divider line for visual separation */}
             <span className="h-5 w-[1px] bg-gray-300"></span>
 
-            {/* Log In & Profile Action */}
-            <button className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-sm font-semibold">
+           
+            <a href='/login' className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-sm font-semibold">
                 <FaRegUserCircle className="text-lg" />
                 <span>Log In</span>
-            </button>
+            </a>
         </div>
     </nav>
   )
