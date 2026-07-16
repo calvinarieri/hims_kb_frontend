@@ -7,8 +7,7 @@ import HomeNavBar from '../components/navigationBar/HomeNavBar';
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Mock data for documentation sections
-  const articles = [
+   const articles = [
     { id: 1, title: "Resolving 'Patient ID Conflict' on Admission", category: "Troubleshooting", views: 1240 },
     { id: 2, title: "How to Override Lab Order Errors Legally", category: "How-To", views: 980 },
     { id: 3, title: "Syncing Offline EMR Data after Network Drops", category: "Troubleshooting", views: 850 },
@@ -23,11 +22,10 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans">
       
-      {/* 1. Navigation Bar */}
+    
       <HomeNavBar />
 
-      {/* 2. Hero Section */}
-      <header className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white py-16 px-6 text-center">
+      <header className="bg-linear-to-br from-slate-900 via-indigo-950 to-slate-900 text-white py-16 px-6 text-center">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-extrabold mt-4 tracking-tight leading-tight">
             Fast Answers for Clinical Workflows
