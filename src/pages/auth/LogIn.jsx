@@ -43,7 +43,7 @@ export default function LogIn() {
         } else {
           setBanner({
             type: 'error',
-            message: saveStatus.message || 'Failed to initialize local session storage securely.',
+            message: saveStatus.message || 'Failed to initialize session storage securely.',
           });
         }
       } else {
@@ -155,7 +155,6 @@ export default function LogIn() {
                 <span>{isSubmitting ? 'Authenticating...' : 'Log in'}</span>
                 {!isSubmitting && <HiArrowRight className="w-4 h-4" />}
               </button>
-
             </Form>
           )}
         </Formik>

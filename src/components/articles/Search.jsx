@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { FaSearch, FaTimes, FaSlidersH } from 'react-icons/fa';
+import { useDocs } from '../../context/DocsContext';
 
-const ALL_CATEGORIES = ["Technology", "Health & Wellness", "Finance", "Education", "Lifestyle", "Entertainment", "Real Estate", "Travel", "Food", "Business"];
-const ALL_TAGS = ["React", "TailwindCSS", "JavaScript", "NextJS", "CSS", "HTML", "NodeJS", "UI/UX", "Database", "Cloud", "Security", "AI", "Mobile", "Testing"];
+export default function Search({
+  searchQuery, setSearchQuery,
+  status, setStatus,
+  orderBy, setOrderBy,
+  selectedCategory, setSelectedCategory,
+  selectedTags, setSelectedTags,
+  onClearAll
+}) {
+  const { categories, tags, fetchCategories, fetchTags } = useDocs();
 
-export default function Search() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [status, setStatus] = useState('');
-  const [orderBy, setOrderBy] = useState('newest');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedTags, setSelectedTags] = useState([]);
+  useEffect(() => {
+    fetchCategories();
+    fetchTags();
+  }, [fetchCategories, fetchTags]);
 
   const hasActiveFilters = searchQuery || status || selectedCategory || selectedTags.length > 0 || orderBy !== 'newest';
 
@@ -25,14 +31,6 @@ export default function Search() {
     setSelectedTags(selectedTags.filter(t => t !== tag));
   };
 
-  const clearAllFilters = () => {
-    setSearchQuery('');
-    setStatus('');
-    setOrderBy('newest');
-    setSelectedCategory('');
-    setSelectedTags([]);
-  };
-
   return (
     <div className="w-full py-4 bg-white rounded-xl space-y-3">
       <div className="flex flex-col lg:flex-row gap-2.5">
@@ -44,12 +42,13 @@ export default function Search() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search resources..."
-            className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:border-amber-500 transition-all"
+            placeholder="Search resources by title or summary..."
+            className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:border-amber-500 transition-all text-sm"
           />
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 shrink-0">
+        {/* Filter Controls */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 shrink-0 text-xs">
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value)}
@@ -76,8 +75,10 @@ export default function Search() {
             onChange={(e) => setSelectedCategory(e.target.value)}
             className={`px-2 py-1.5 border rounded-lg focus:outline-none focus:border-amber-500 ${selectedCategory ? 'bg-amber-50 border-amber-500 text-amber-700 font-medium' : 'bg-slate-50 border-slate-200 text-slate-700'}`}
           >
-            <option value="">Category</option>
-            {ALL_CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+            <option value="">All Categories</option>
+            {categories.map(cat => (
+              <option key={cat.id || cat.name} value={cat.name}>{cat.name}</option>
+            ))}
           </select>
 
           <select
@@ -86,18 +87,20 @@ export default function Search() {
             className={`px-2 py-1.5 border rounded-lg focus:outline-none focus:border-amber-500 ${selectedTags.length > 0 ? 'bg-amber-50 border-amber-500 text-amber-700 font-medium' : 'bg-slate-50 border-slate-200 text-slate-700'}`}
           >
             <option value="" disabled>Add Tag...</option>
-            {ALL_TAGS.filter(t => !selectedTags.includes(t)).map(tag => <option key={tag} value={tag}>{tag}</option>)}
+            {tags.filter(t => !selectedTags.includes(t.name)).map(tag => (
+              <option key={tag.id || tag.name} value={tag.name}>{tag.name}</option>
+            ))}
           </select>
         </div>
       </div>
 
       {hasActiveFilters && (
-        <div className="flex flex-wrap items-center justify-between gap-2 pt-2.5 border-t text-[11px]">
+        <div className="flex flex-wrap items-center justify-between gap-2 pt-2.5 border-t border-slate-100 text-[11px]">
           <div className="flex flex-wrap items-center gap-1.5 max-w-[80%]">
             <span className="flex items-center gap-1 text-slate-400 mr-1"><FaSlidersH size={10} /> Active:</span>
             {selectedCategory && (
               <span className="inline-flex items-center gap-1 bg-amber-50 text-amber-700 px-2 py-0.5 rounded border border-amber-200">
-                {selectedCategory}
+                Category: {selectedCategory}
                 <button onClick={() => setSelectedCategory('')} className="hover:text-amber-900"><FaTimes size={8} /></button>
               </span>
             )}
@@ -109,10 +112,10 @@ export default function Search() {
             ))}
           </div>
           <button
-            onClick={clearAllFilters}
+            onClick={onClearAll}
             className="flex items-center gap-1 font-semibold text-amber-600 hover:text-amber-700 transition-colors"
           >
-            Clear <FaTimes size={10} />
+            Clear Filters <FaTimes size={10} />
           </button>
         </div>
       )}

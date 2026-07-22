@@ -6,7 +6,8 @@ import ArticlesLayout from './layout/ArticlesLayout'
 import LogIn from './pages/auth/LogIn'
 import PortalLayout from './layout/PortalLayout'
 import Articles from './pages/portal/Articles'
-import Editor from './components/articles/Editor'
+import { DocsProvider } from './context/DocsContext'
+import EditorPage from './pages/portal/EditorPage'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,7 +17,8 @@ const router = createBrowserRouter(
         <Route path='/login' element ={<LogIn />} />
         <Route path='/portal' element={<PortalLayout />}>
           <Route path='articles' element={<Articles />} />
-          <Route path='editor' element={<Editor />} />
+          <Route path='editor' element={<EditorPage />} />
+          <Route path='editor/:id' element={<EditorPage />} />
           <Route path='*' element={<div>Not Found</div>} />
         </Route>
     </Route>
@@ -26,7 +28,9 @@ const router = createBrowserRouter(
 export default function App() {
   return (
     <div>
-      <RouterProvider router={router} />    
+      <DocsProvider>
+        <RouterProvider router={router} />  
+      </DocsProvider>        
     </div>
   )
 }
